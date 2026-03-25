@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Entornos virtuales
+venv/
+env/
+.venv/
+.env/
+
+# Carpetas de descargas
+Downloads/
+Dowloads MP3/
+Dowloads mp4/
