@@ -1,4 +1,3 @@
-
 import unittest
 from unittest.mock import patch, MagicMock
 from downloader import start_download
@@ -16,7 +15,10 @@ class TestDownloader(unittest.TestCase):
 
         # Assert
         self.assertTrue(result)
-        mock_youtube_dl.assert_called_once()
+        # Check that YoutubeDL was called with the cookies option
+        call_args, call_kwargs = mock_youtube_dl.call_args
+        self.assertIn('cookies_from_browser', call_args[0])
+        self.assertEqual(call_args[0]['cookies_from_browser'], ('chrome',))
         mock_ydl_instance.download.assert_called_once_with(['fake_video_url'])
 
     @patch('downloader.yt_dlp.YoutubeDL')
@@ -30,7 +32,10 @@ class TestDownloader(unittest.TestCase):
 
         # Assert
         self.assertTrue(result)
-        mock_youtube_dl.assert_called_once()
+        # Check that YoutubeDL was called with the cookies option
+        call_args, call_kwargs = mock_youtube_dl.call_args
+        self.assertIn('cookies_from_browser', call_args[0])
+        self.assertEqual(call_args[0]['cookies_from_browser'], ('chrome',))
         mock_ydl_instance.download.assert_called_once_with(['fake_audio_url'])
 
     @patch('downloader.yt_dlp.YoutubeDL')

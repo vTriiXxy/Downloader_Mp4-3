@@ -66,18 +66,18 @@ def get_download_path(mode):
     Utiliza la carpeta 'Downloads' del usuario como base.
     """
     if mode == 'audio':
-        # Para audio, la ruta es: C:\Users\TuUsuario\Downloads\Dowloads MP3
-        return Path.home() / "Downloads" / "Dowloads MP3"
+        # Para audio, la ruta es: C:\Users\TuUsuario\Downloads\Downloads MP3
+        return Path.home() / "Downloads" / "Downloads MP3"
     else: # mode == 'video'
-        # Para video, la ruta es: C:\Users\TuUsuario\Downloads\Dowloads mp4
-        return Path.home() / "Downloads" / "Dowloads mp4"
+        # Para video, la ruta es: C:\Users\TuUsuario\Downloads\Downloads mp4
+        return Path.home() / "Downloads" / "Downloads mp4"
 
 def setup_download_directories():
     """
     Verifica si las carpetas de descarga existen y, si no, las crea.
     Esto previene errores si el script se ejecuta por primera vez.
     """
-    print("Verificando directorios de descarga ('Dowloads MP3' y 'Dowloads mp4')...")
+    print("Verificando directorios de descarga ('Downloads MP3' y 'Downloads mp4')...")
     try:
         # os.makedirs con exist_ok=True no lanza un error si la carpeta ya existe.
         os.makedirs(get_download_path('video'), exist_ok=True)
@@ -102,6 +102,7 @@ def start_download(url, mode):
     if mode == 'audio':
         # Opciones específicas para descargar y convertir a MP3.
         ydl_opts = {
+            'cookies_from_browser': ('chrome',),
             # 'format': 'bestaudio/best' -> Selecciona la mejor calidad de solo audio.
             'format': 'bestaudio/best',
             # 'postprocessors': Define acciones a realizar después de la descarga.
@@ -122,6 +123,7 @@ def start_download(url, mode):
     else: # modo 'video'
         # Opciones para descargar el video en la mejor calidad posible (MP4).
         ydl_opts = {
+            'cookies_from_browser': ('chrome',),
             # 'format': Intenta descargar el mejor video en MP4 y el mejor audio en M4A,
             # y si no, la mejor versión que ya venga unida en formato MP4.
             'format': "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
